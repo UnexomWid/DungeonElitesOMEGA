@@ -1,0 +1,329 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4525952735872516813
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4525952735872516814}
+  - component: {fileID: 4525952735872516815}
+  - component: {fileID: 4525952735872516800}
+  m_Layer: 0
+  m_Name: PlayerInput
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4525952735872516814
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4525952735872516813}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4525952735872516815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4525952735872516813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 970a756c7b2d37648aa4c60032f1af3f,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnLeftStick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: da157109-e78a-42e9-bcdf-2af0a3a4b716
+    m_ActionName: GeneralInput/Left Stick[/Microntek              USB Joystick         
+      /stick,/XInputControllerWindows/leftStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnRightStick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f35e0138-e762-45f1-a7ca-fc040041a963
+    m_ActionName: GeneralInput/Right Stick[/XInputControllerWindows/rightStick,/Microntek             
+      USB Joystick          /stick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnA
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c17dffa4-2aa9-4fb8-8139-a20f43470e64
+    m_ActionName: GeneralInput/A[/XInputControllerWindows/buttonSouth,/Microntek             
+      USB Joystick          /button3]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnB
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9925201b-f4ea-4b10-8363-5a16c7f98e66
+    m_ActionName: GeneralInput/B[/XInputControllerWindows/buttonEast,/Microntek             
+      USB Joystick          /button2]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnX
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 2ab5c84a-2c0f-4a8d-bb3f-0820c194a098
+    m_ActionName: GeneralInput/X[/XInputControllerWindows/buttonWest,/Microntek             
+      USB Joystick          /button4]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnY
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e718adcb-08ac-4c54-8526-5ab1b2842dba
+    m_ActionName: GeneralInput/Y[/XInputControllerWindows/buttonNorth,/Microntek             
+      USB Joystick          /trigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3e86986b-e95f-4b9b-9198-4cae24293f47
+    m_ActionName: GeneralInput/Start[/XInputControllerWindows/start,/Microntek             
+      USB Joystick          /button10]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnBack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7b2065a4-fa2e-4ec1-9a58-38b177a57ec7
+    m_ActionName: GeneralInput/Back[/XInputControllerWindows/select,/Microntek             
+      USB Joystick          /button9]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnLeftStickPress
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: dc163772-f96c-4359-a135-64771f8f302f
+    m_ActionName: GeneralInput/Left Stick Press[/XInputControllerWindows/leftStickPress,/Microntek             
+      USB Joystick          /button11]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnRightStickPress
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 81c2b9ad-18ab-44d8-85e9-53bdd599fdb8
+    m_ActionName: GeneralInput/Right Stick Press[/XInputControllerWindows/rightStickPress,/Microntek             
+      USB Joystick          /button12]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnLeftTrigger
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 67b058a2-fa35-4bcd-bf54-021c06379102
+    m_ActionName: GeneralInput/Left Trigger[/XInputControllerWindows/leftTrigger,/Microntek             
+      USB Joystick          /button7]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnRightTrigger
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 80c045c3-04b4-43a7-96a4-aa50e782ed20
+    m_ActionName: GeneralInput/Right Trigger[/XInputControllerWindows/rightTrigger,/Microntek             
+      USB Joystick          /button8]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnLeftBumper
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1749833f-faa3-4d06-8c9c-a5135c542d3a
+    m_ActionName: GeneralInput/Left Bumper[/XInputControllerWindows/leftShoulder,/Microntek             
+      USB Joystick          /button5]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4525952735872516800}
+        m_TargetAssemblyTypeName: ControllerInput, Assembly-CSharp
+        m_MethodName: OnRightBumper
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 233dc91f-3d19-4704-b916-6cae63d700eb
+    m_ActionName: GeneralInput/Right Bumper[/XInputControllerWindows/rightShoulder,/Microntek             
+      USB Joystick          /button6]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: GeneralInput
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &4525952735872516800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4525952735872516813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad4a76471da04564b8ab9fbe3915e67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  A: 0
+  X: 0
+  Y: 0
+  B: 0
+  leftStick: {x: 0, y: 0}
+  rightStick: {x: 0, y: 0}
+  start: 0
+  back: 0
+  leftStickPress: 0
+  rightStickPress: 0
+  leftTrigger: 0
+  rightTrigger: 0
+  leftBumper: 0
+  rightBumper: 0

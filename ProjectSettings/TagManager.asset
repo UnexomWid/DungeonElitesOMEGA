@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Player
+  - Map
+  - MiniMap
+  - Walls
+  - MapNoCamera
+  - WallsNoCamera
+  - PlayerSolids
+  - MobSolids
+  - Mobs
+  - MobInnerCollider
+  - TankWall
+  - AllSolids
+  - AntiWalls
+  - AntiDungeonWalls
+  - ShopsWalls
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Layer1
+    uniqueID: 2823948811
+    locked: 0
+  - name: Layer2
+    uniqueID: 800816335
+    locked: 0
+  - name: BossLighting
+    uniqueID: 855980171
+    locked: 0
+  - name: Layer3
+    uniqueID: 3455389769
+    locked: 0
+  - name: Light
+    uniqueID: 3564608171
+    locked: 0
+  - name: Medic
+    uniqueID: 3884611359
+    locked: 0
+  - name: Mage
+    uniqueID: 920208133
+    locked: 0
+  - name: Archer
+    uniqueID: 3698906831
+    locked: 0
+  - name: Knight
+    uniqueID: 3560279281
+    locked: 0
+  - name: Tank
+    uniqueID: 2673480897
+    locked: 0
+  - name: Layer4
+    uniqueID: 2672144087
+    locked: 0
+  - name: Layer5
+    uniqueID: 2764571379
+    locked: 0
+  - name: Torches
+    uniqueID: 1758401017
+    locked: 0
+  - name: Walls
+    uniqueID: 3574000757
+    locked: 0
+  - name: Layer6
+    uniqueID: 3523547565
+    locked: 0
+  - name: Layer7
+    uniqueID: 1818052319
+    locked: 0
+  - name: BossVoid
+    uniqueID: 3718436655
+    locked: 0

@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Start.unity
+    guid: 8fab625393fe8564180328ffa5a2ba16
+  - enabled: 1
+    path: Assets/Scenes/SelectDungeon.unity
+    guid: fb063763f505a574fa1ea80fc2ecc139
+  - enabled: 1
+    path: Assets/Scenes/Shops.unity
+    guid: 00f157a0a4b1ff34ebf1a4fe39c875c5
+  - enabled: 1
+    path: Assets/Scenes/Fire.unity
+    guid: 4475ce529f0b1d3488a42222fd35a559
+  - enabled: 1
+    path: Assets/Scenes/Select.unity
+    guid: baabd9933ad8625429e259ca7ea7c501
+  - enabled: 1
+    path: Assets/Scenes/Settings.unity
+    guid: c5b38e23aa356954895639db86f6798c
+  - enabled: 1
+    path: Assets/Scenes/MainMenuCredits.unity
+    guid: 2272791a385a9704d9a62c7f8a1f5b58
+  - enabled: 1
+    path: Assets/Scenes/OnlineSelect.unity
+    guid: cf79c0b282dd9294d8d8e8f8dfdc97ed
+  - enabled: 1
+    path: Assets/Scenes/OnlineLobby.unity
+    guid: f90ce27edb526ac419faf71908d95430
+  - enabled: 1
+    path: Assets/Scenes/SampleScene 1.unity
+    guid: ffd4b7095a874fc4a87173beda48cea9
+  - enabled: 1
+    path: Assets/Scenes/SampleScene 2.unity
+    guid: 6f6607707c28b094890ac5544968303d
+  - enabled: 1
+    path: Assets/Scenes/SampleScene 3.unity
+    guid: a345c8d17609ed34caa0b4f6fc921f83
+  - enabled: 1
+    path: Assets/Scenes/SampleScene 4.unity
+    guid: f0e2ff195ab86b846ac736d2e1267ee9
+  - enabled: 1
+    path: Assets/Scenes/OnlineFight1.unity
+    guid: 579e0ac0da9af614b8d315bfccecd2a4
+  - enabled: 1
+    path: Assets/Scenes/OnlineFight2.unity
+    guid: 3d600a24007ec3a46bc242685af5c925
+  - enabled: 1
+    path: Assets/Scenes/OnlineFight3.unity
+    guid: 108e19a040bd10848bfb8b96e972f933
+  - enabled: 1
+    path: Assets/Scenes/OnlineFight4.unity
+    guid: 201445b5a331b8146b27c9e2da2d92c2
+  - enabled: 1
+    path: Assets/Scenes/Ice.unity
+    guid: 10bddf8686e4ab7478d2434c6ad7ed81
+  - enabled: 1
+    path: Assets/Scenes/Magic.unity
+    guid: 4b6d59d60735e9048b6b5479841c55b0
+  - enabled: 1
+    path: Assets/Scenes/Plains.unity
+    guid: 401b30c1aaef65f4d8bd566da84cb6f3
+  - enabled: 1
+    path: Assets/Scenes/Stone.unity
+    guid: 0c048df4bd62686479d1844d818ca863
+  - enabled: 1
+    path: Assets/Scenes/Boss.unity
+    guid: 5fba3ae7c6839ab4094892362d390456
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 18456db983036604ab81d87478202174
+  - enabled: 1
+    path: Assets/Scenes/Intro.unity
+    guid: 928e4de83ca64af4b8203ffd7e998796
+  - enabled: 1
+    path: Assets/Scenes/Outro.unity
+    guid: 40d287a4d6495f54dba12ef8bdac66bc
+  - enabled: 1
+    path: Assets/Scenes/TutorialScene.unity
+    guid: f66b8e739b27c334387d3f657c9f7c1c
+  - enabled: 1
+    path: Assets/Scenes/Gameplay Settings.unity
+    guid: d8bf71bd8277c2942a5b759aed11168d
+  m_configObjects: {}

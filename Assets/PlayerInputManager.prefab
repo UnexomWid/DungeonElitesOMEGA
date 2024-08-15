@@ -1,0 +1,306 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2192211678797289226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2192211678797289220}
+  - component: {fileID: 2192211678797289227}
+  - component: {fileID: 2192211678797289221}
+  m_Layer: 0
+  m_Name: PlayerInputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2192211678797289220
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2192211678797289226}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2192211678797289227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2192211678797289226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NotificationBehavior: 2
+  m_MaxPlayerCount: -1
+  m_AllowJoining: 1
+  m_JoinBehavior: 1
+  m_PlayerJoinedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_PlayerLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_JoinAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Join
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: e5942fea-ddc9-40b0-86d5-a162de25853a
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 30530cd4-a9af-49c5-ab68-bf41aebcb8f8
+        m_Path: <HID::Microntek              USB Joystick          >/button3
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 789eafc2-a276-4ca6-8613-ef7290cac5ac
+        m_Path: <HID::Microntek              USB Joystick          >/button2
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 15ccf8ba-8a38-48db-b9c5-28722ef5fb79
+        m_Path: <Joystick>/trigger
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 1a5ff331-44c0-448e-869a-03fa81b41404
+        m_Path: <HID::Microntek              USB Joystick          >/button4
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 99e0e55c-07e2-4014-b3a5-b0fcf93de5b8
+        m_Path: <HID::Microntek              USB Joystick          >/button5
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: f8f46e2a-48e9-40eb-b457-52c6d8a828e8
+        m_Path: <HID::Microntek              USB Joystick          >/button6
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 2416fed1-b9a7-4a20-b5fe-92aef9df3e99
+        m_Path: <HID::Microntek              USB Joystick          >/button8
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: bc0503c7-959c-4f74-a9b6-239630e9a1aa
+        m_Path: <HID::Microntek              USB Joystick          >/button7
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 8bf2b47c-0c8e-4655-a8ed-48b7f503db38
+        m_Path: <HID::Microntek              USB Joystick          >/button9
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: b07b4454-d2dd-45e2-91fa-b1c174848d67
+        m_Path: <HID::Microntek              USB Joystick          >/button10
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 979cf7bd-636e-44af-baba-8aff617c86a2
+        m_Path: <HID::Microntek              USB Joystick          >/button12
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: bea052bd-3ec7-46cf-b7b0-009745c841bd
+        m_Path: <HID::Microntek              USB Joystick          >/button11
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 0018638a-50eb-441b-be77-a07b8eca6393
+        m_Path: <Joystick>/stick
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 745be3d1-e53d-4f53-9723-7a21f4019339
+        m_Path: <Gamepad>/buttonSouth
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: ae4e274b-3025-49b8-9a1b-34e0c743e538
+        m_Path: <Gamepad>/buttonEast
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 0b069fe0-775b-469c-bf4c-5b4a58f2a9e3
+        m_Path: <Gamepad>/buttonNorth
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: f64279ee-ec00-43a5-9020-f2f7f794f0a0
+        m_Path: <Gamepad>/buttonWest
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 3f661b68-7c68-4789-aaa9-32eedfd4c649
+        m_Path: <Gamepad>/start
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 09cf5455-e6e4-422d-91d7-10ded1f8b5b4
+        m_Path: <Gamepad>/select
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 5dc130e9-4831-487b-b5b1-95bf15e80a99
+        m_Path: <Gamepad>/leftStickPress
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 65a31019-ef53-4e05-8b53-a496684f5213
+        m_Path: <Gamepad>/rightStickPress
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 8b77f14d-2618-4836-92a9-e8729f78f177
+        m_Path: <Gamepad>/leftShoulder
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 3ec084ea-1277-4efa-88e4-efa5d1f5ae19
+        m_Path: <Gamepad>/rightShoulder
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 2cd8b7dd-0de5-4355-9947-44e6428518df
+        m_Path: <Gamepad>/leftTrigger
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: e9156d7e-105a-417d-ac23-4789c9034a9d
+        m_Path: <Gamepad>/rightTrigger
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 7da924bb-b31d-441f-a7ca-8f7238fba525
+        m_Path: <Gamepad>/leftStick
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: 899ab49f-6e93-4fcb-814e-66457e6df6e1
+        m_Path: <Gamepad>/rightStick
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_PlayerPrefab: {fileID: 4525952735872516813, guid: 970b7324f2ab79546802e1330ec71e50,
+    type: 3}
+  m_SplitScreen: 0
+  m_MaintainAspectRatioInSplitScreen: 0
+  m_FixedNumberOfSplitScreens: -1
+  m_SplitScreenRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!114 &2192211678797289221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2192211678797289226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd89c0bbbe743fa4abc3729bd2961bee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
