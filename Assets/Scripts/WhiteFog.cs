@@ -7,7 +7,7 @@ public class WhiteFog : MonoBehaviour
     bool shrinking = true;
     bool shrinking2 = false;
     bool growing = false;
-    SpriteRenderer renderer;
+    new SpriteRenderer renderer;
 
     Transform myTransform;
     private void OnEnable()

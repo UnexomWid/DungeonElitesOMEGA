@@ -9,7 +9,7 @@ public class borderExpl : MonoBehaviour
     public AudioSource explSfx;
 
     SpriteRenderer sprite;
-    PolygonCollider2D collider;
+    new PolygonCollider2D collider;
     hitbox hitbox;
     void Start()
     {

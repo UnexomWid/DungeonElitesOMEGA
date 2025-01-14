@@ -13,7 +13,7 @@ public class hitbox : MonoBehaviour
     public bool doImpactOnlyOnPlayers = true;
     public bool impactInRadius = false;
     public float impactRadius = 0f;
-    public Collider2D collider;
+    new public Collider2D collider;
     public bool saveParticlesWhenDestroyed = false;
     public float damage;
     public List<GameObject> players;

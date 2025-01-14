@@ -6,7 +6,7 @@ public class playerDetect : MonoBehaviour
 {
     public GameObject player;
 
-    CircleCollider2D collider;
+    new CircleCollider2D collider;
     private void Start()
     {
         collider = GetComponent<CircleCollider2D>();

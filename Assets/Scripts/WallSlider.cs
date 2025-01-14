@@ -11,7 +11,7 @@ public class WallSlider : MonoBehaviour
     Transform myTransform;
 
     DungeonData dungeonData;
-    Collider2D collider;
+    new Collider2D collider;
     private void Start()
     {
         myTransform = transform;

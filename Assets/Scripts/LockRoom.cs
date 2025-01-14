@@ -123,7 +123,7 @@ public class LockRoom : MonoBehaviour
     SpriteRenderer spriteRenderer;
     BoxCollider2D door2BC;
     LockRoom lockRoom;
-    Collider2D collider;
+    new Collider2D collider;
     DungeonData dungeonData;
     List<player> mobScripts;
 

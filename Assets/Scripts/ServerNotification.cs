@@ -63,9 +63,9 @@ public class ServerNotification : MonoBehaviour
         }*/
     }
 
-    private void OnLevelWasLoaded(int level)
+    /*private void OnLevelWasLoaded(int level)
     {
-        /*string name = SceneManager.GetActiveScene().name;
+        string name = SceneManager.GetActiveScene().name;
 
         switch (name)
         {
@@ -104,8 +104,8 @@ public class ServerNotification : MonoBehaviour
                     SendMessageToServer("User started dueling with " + count + " players.");
                     break;
                 }
-        }*/
-    }
+        }
+    }*/
 
     public void SendDungeonData(string message)
     {

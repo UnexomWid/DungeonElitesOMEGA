@@ -15,7 +15,7 @@ public class PlayerData : MonoBehaviour
     public Text prevChar;
     public Text nextChar;
     public Text currentChar;
-    public Text name;
+    new public Text name;
 
     public int charIndex = 0;
 
@@ -38,7 +38,7 @@ public class PlayerData : MonoBehaviour
     public int echipa;
     public InputField teamField;
     public GameObject objs;
-    public bool enabled = false;
+    new public bool enabled = false;
     //public SharpDX.DirectInput.Joystick joystick;
 
     int buttonIndex = 0;
