@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class GameVer : MonoBehaviour
 {
     void Start()
     {
-        GetComponent<Text>().text = "Version: " + Application.version;
+        GetComponent<TextMeshProUGUI>().text = "Dungeon Elites " + Application.version;
     }
 }
