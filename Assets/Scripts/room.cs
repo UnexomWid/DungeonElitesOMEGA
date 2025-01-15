@@ -69,7 +69,9 @@ public class room : MonoBehaviour
         {
             spriteRenderer.color = new Color32((byte)(spriteRenderer.color.r*255), (byte)(spriteRenderer.color.g*255), (byte)(spriteRenderer.color.b*255), 255);
 
-            if(discovered == false && SceneManager.GetActiveScene().name != "Shops")
+            Debug.Log(transform.name);
+
+            if (discovered == false && SceneManager.GetActiveScene().name != "Shops" && rooms != null)
             {
                 bool all = true;
 
@@ -82,10 +84,10 @@ public class room : MonoBehaviour
                     }
                 }
 
-                Debug.Log(transform.name);
-
                 if (all)
+                {
                     DungeonData.instance.AddToQuest(24, 1);
+                }
             }
 
             discovered = true;
