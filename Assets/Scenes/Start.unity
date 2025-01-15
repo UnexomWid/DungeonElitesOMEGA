@@ -1127,7 +1127,7 @@ GameObject:
   - component: {fileID: 252456555}
   - component: {fileID: 252456554}
   m_Layer: 5
-  m_Name: OMEGA Rainbow
+  m_Name: OMEGA Mark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

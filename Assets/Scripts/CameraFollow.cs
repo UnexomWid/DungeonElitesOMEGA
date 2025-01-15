@@ -89,6 +89,11 @@ public class CameraFollow : MonoBehaviour
 
     public void RecalculateDamage()
     {
+        if (damageEffect == null)
+        {
+            return;
+        }
+
         int totalPercentage = players.Count * 100;
         int currentPercentage = 0;
 

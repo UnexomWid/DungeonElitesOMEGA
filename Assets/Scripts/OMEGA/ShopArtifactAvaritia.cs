@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace OMEGA
 {
-    public class ShopChalice : MonoBehaviour
+    public class ShopArtifactAvaritia : MonoBehaviour
     {
         void Awake()
         {

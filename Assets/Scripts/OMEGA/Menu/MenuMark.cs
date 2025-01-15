@@ -5,7 +5,7 @@ using TMPro;
 
 namespace OMEGA
 {
-    public class OMEGARainbow : MonoBehaviour
+    public class MenuMark : MonoBehaviour
     {
         public float speed = 1f;
 

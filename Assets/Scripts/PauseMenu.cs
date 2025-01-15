@@ -76,6 +76,11 @@ public class PauseMenu : MonoBehaviour
 
     private void OnDisable()
     {
+        if (index < 0 || index >= buttons.Length)
+        {
+            return;
+        }
+
         buttons[index].GetComponent<PauseButtons>().Unhighlight();
         menuFocused = false;
     }
