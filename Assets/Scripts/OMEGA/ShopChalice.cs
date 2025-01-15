@@ -18,7 +18,7 @@ namespace OMEGA
                 return;
             }
 
-            //AvaritiaData.OnEnableAvaritiaMode();
+            Data.trialMode = Data.TrialMode.AVARITIA;
 
             p.SpawnPurchaseVfx();
 

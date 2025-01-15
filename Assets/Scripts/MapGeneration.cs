@@ -66,7 +66,6 @@ public class MapGeneration : MonoBehaviour
 
     public void Generate()
     {
-
         if (generated == false)
         {
             List<GameObject> hallMobs = new List<GameObject>();

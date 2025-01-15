@@ -1137,7 +1137,7 @@ public class player : MonoBehaviour
 
     public GameObject hpBar;
 
-    public TextMeshPro name;
+    new public TextMeshPro name;
     public AudioSource hit;
 
     public AudioSource healSfx;

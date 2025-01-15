@@ -1,5 +1,6 @@
 ﻿[*.cs]
 
-# CS3009: Base type is not CLS-compliant
+# CLS-compliancy stuff
 dotnet_diagnostic.CS3009.severity = none
+dotnet_diagnostic.CS3005.severity = none
 dotnet_diagnostic.CS3001.severity = none
