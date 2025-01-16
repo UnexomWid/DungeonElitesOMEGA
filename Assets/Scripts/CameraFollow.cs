@@ -38,6 +38,13 @@ public class CameraFollow : MonoBehaviour
 
     public void Begin()
     {
+        // When players are added to CameraFollow.players, register them in OMEGA too.
+        // Players are removed from CameraFollow when they die, but not from OMEGA.
+        if (players != null)
+        {
+            OMEGA.Events.OnEnterSceneWithPlayers(players);
+        }
+
         instance = this;
 
         playerScripts = new List<player>();

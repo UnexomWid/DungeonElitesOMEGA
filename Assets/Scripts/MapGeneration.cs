@@ -5,6 +5,7 @@ using System.Linq;
 using Pathfinding;
 using UnityEngine.SceneManagement;
 using System;
+using System.Threading.Tasks;
 
 public class MapGeneration : MonoBehaviour
 {
@@ -569,7 +570,10 @@ public class MapGeneration : MonoBehaviour
             //if ((startPoints.Count < minRooms || voidRooms != 1))
             {
                 FindObjectOfType<DungeonData>().restarted = true;
+                OMEGA.Events.OnDungeonGenerationRestarted();
+
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                return;
             }
             else
             {
@@ -669,9 +673,6 @@ public class MapGeneration : MonoBehaviour
                 }
             }
         }
-
-
-
     }
     public GameObject voidRoom;
     public Sprite brokenTorch;

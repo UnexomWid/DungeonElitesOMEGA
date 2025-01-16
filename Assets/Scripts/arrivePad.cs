@@ -38,12 +38,12 @@ public class arrivePad : MonoBehaviour
         if (dungeonData.restarted)
         {
             dungeonData.restarted = false;
-            GetComponent<Animator>().Play("arrive", 0, 0.21f);
+            GetComponent<Animator>().Play("prearrive", 0, 0.67f); // Skip the first 1s of the animation (fade in)
             arrive = Resources.Load("Sounds\\arrive") as AudioClip;
         }
         else
         {
-            GetComponent<Animator>().Play("arrive");
+            GetComponent<Animator>().Play("prearrive");
         }
 
         try
@@ -112,6 +112,13 @@ public class arrivePad : MonoBehaviour
         AudioSource.PlayClipAtPoint(arrive, Camera.main.transform.position, PlayerPrefs.GetFloat("SFXVolume", 1));
     }
 
+    void OnMapGenerated()
+    {
+        PrepareDungeon();
+        OMEGA.Events.OnDungeonGenerated();
+        GetComponent<Animator>().Play("arrive");
+    }
+
     void LoadMap()
     {
         try
@@ -127,9 +134,17 @@ public class arrivePad : MonoBehaviour
         {
             map.SetActive(true);
             map.GetComponentInChildren<MapGeneration>().Generate();
+            OnMapGenerated();
         }
+        else
+        {
+            PrepareDungeon();
+        }
+    }
 
-        foreach(SelectableItem item in inventorySpawn.itemSlots)
+    void PrepareDungeon()
+    {
+        foreach (SelectableItem item in inventorySpawn.itemSlots)
         {
             item.itemType = -1;
         }
@@ -156,10 +171,10 @@ public class arrivePad : MonoBehaviour
             foreach (player player in players)
             {
 
-                if(player.bot == false)
+                if (player.bot == false)
                 {
 
-                    for(int i=0;i<dungeonData.statuses[player.caracterId].hp; i++)
+                    for (int i = 0; i < dungeonData.statuses[player.caracterId].hp; i++)
                     {
                         player.SetNewHp(false);
                     }
@@ -239,11 +254,11 @@ public class arrivePad : MonoBehaviour
                             }
 
 
-                            for(int i=1;i< abillity1Slot.lvl;i++)
+                            for (int i = 1; i < abillity1Slot.lvl; i++)
                             {
-                                if(i == 6)
+                                if (i == 6)
                                 {
-                                    if(player.wizard != null)
+                                    if (player.wizard != null)
                                     {
                                         player.wizard.LevelAbil(0, true);
                                     }
@@ -267,27 +282,27 @@ public class arrivePad : MonoBehaviour
                                 else
                                 {
 
-                                        if (player.wizard != null)
-                                        {
-                                            player.wizard.LevelAbil(0, false);
-                                        }
-                                        if (player.knight != null)
-                                        {
-                                            player.knight.LevelAbil(0, false);
-                                        }
-                                        if (player.supportClass != null)
-                                        {
-                                            player.supportClass.LevelAbil(0, false);
-                                        }
-                                        if (player.tank != null)
-                                        {
-                                            player.tank.LevelAbil(0, false);
-                                        }
-                                        if (player.archer != null)
-                                        {
-                                            player.archer.LevelAbil(0, false);
-                                        }
-                                    
+                                    if (player.wizard != null)
+                                    {
+                                        player.wizard.LevelAbil(0, false);
+                                    }
+                                    if (player.knight != null)
+                                    {
+                                        player.knight.LevelAbil(0, false);
+                                    }
+                                    if (player.supportClass != null)
+                                    {
+                                        player.supportClass.LevelAbil(0, false);
+                                    }
+                                    if (player.tank != null)
+                                    {
+                                        player.tank.LevelAbil(0, false);
+                                    }
+                                    if (player.archer != null)
+                                    {
+                                        player.archer.LevelAbil(0, false);
+                                    }
+
                                 }
                             }
 
