@@ -16624,7 +16624,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Generation Attempt: 1'
+  m_text: Generating dungeon...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e36bd39ed34cbaf448a782d0c7ab453b, type: 2}
   m_sharedMaterial: {fileID: -8566414479478146146, guid: e36bd39ed34cbaf448a782d0c7ab453b,

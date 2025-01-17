@@ -65,13 +65,21 @@ public class MapGeneration : MonoBehaviour
         return result;
     }*/
 
-    public void Generate()
+    public IEnumerator Generate(Action callback)
     {
+        // UW: There's no performance benefit from using a coroutine here.
+        // A thread would've been nice, but there are too many Unity API calls which must be done on the main thread.
+        // Still, it's better to split the work among frames so the game doesn't freeze.
+        // Plus, the progress text is nice.
+
         if (generated == false)
         {
             List<GameObject> hallMobs = new List<GameObject>();
 
-            foreach(GameObject hall in pathRooms)
+            MapAttempt.Update("Preparing room generation...");
+            yield return null;
+
+            foreach (GameObject hall in pathRooms)
             {
                 if (hall.GetComponent<room>().hasMobs)
                     hallMobs.Add(hall);
@@ -79,6 +87,7 @@ public class MapGeneration : MonoBehaviour
 
             List<GameObject> newPathRoomsObj = new List<GameObject>(pathRooms);
 
+            // Remove all path rooms which have mobs
             foreach(GameObject hall in hallMobs)
             {
                 newPathRoomsObj.Remove(hall);
@@ -97,10 +106,11 @@ public class MapGeneration : MonoBehaviour
                 for (int i = 0; i < 4; i++)
                 {
                     roomTypes.Add('h');
-                    Debug.Log("addedH");
+                    //Debug.Log("addedH");
                 }
 
-
+            MapAttempt.Update("Generating rooms...");
+            yield return null;
 
             generated = true;
             List<GameObject> startPoints = new List<GameObject>();
@@ -113,6 +123,9 @@ public class MapGeneration : MonoBehaviour
             List<GameObject> chestRooms = new List<GameObject>();
             for (int i = 0; i < maxRooms; i++)
             {
+                MapAttempt.Update("Generating room " + (i + 1));
+                yield return null;
+
                 try
                 {
                     if (startPoints[i].name.Contains("Unused") == false)
@@ -159,7 +172,7 @@ public class MapGeneration : MonoBehaviour
                                     pathRoom = Instantiate(usedRoom);
                                     break;
                                 case 'h':
-                                    Debug.Log("spawnedH");
+                                    //Debug.Log("spawnedH");
                                     int hallMobsType = UnityEngine.Random.Range(0, 999999) % hallMobs.Count;
                                     usedRoom = hallMobs[hallMobsType];
                                     pathRoom = Instantiate(usedRoom);
@@ -185,13 +198,15 @@ public class MapGeneration : MonoBehaviour
                                 pathRoom.GetComponent<room>().mobRoomChance = mobRoomChance + 1;
                         }
 
+                        var roomComp = pathRoom.GetComponent<room>();
+
                         pathRoom.transform.SetParent(parentObj.transform);
                         pathRoom.transform.localScale = new Vector3(1, 1, 1);
                         pathRoom.transform.localEulerAngles = new Vector3(0, 0, startPoints[i].transform.localEulerAngles.z);
-                        Vector3 offset = Quaternion.Euler(0, 0, startPoints[i].transform.localEulerAngles.z) * pathRoom.GetComponent<room>().endPoint.transform.localPosition;
-                        pathRoom.GetComponent<room>().endPoint.transform.position = startPoints[i].transform.position;
-                        pathRoom.transform.position = pathRoom.GetComponent<room>().endPoint.transform.position - offset * 100;
-                        pathRoom.GetComponent<room>().endPoint.transform.localPosition = offset;
+                        Vector3 offset = Quaternion.Euler(0, 0, startPoints[i].transform.localEulerAngles.z) * roomComp.endPoint.transform.localPosition;
+                        roomComp.endPoint.transform.position = startPoints[i].transform.position;
+                        pathRoom.transform.position = roomComp.endPoint.transform.position - offset * 100;
+                        roomComp.endPoint.transform.localPosition = offset;
                         pathRoom.SetActive(true);
                         List<thisisaroom> boxes = FindObjectsOfType<thisisaroom>().ToList();
                         boxes.Remove(pathRoom.GetComponent<thisisaroom>());
@@ -200,13 +215,14 @@ public class MapGeneration : MonoBehaviour
 
                         GameObject parent = startPoints[i].transform.parent.gameObject;
 
+                        var sprite = pathRoom.GetComponent<SpriteRenderer>();
+
                         foreach (thisisaroom box in boxes)
                         {
-
-
-                            if (box.gameObject.GetComponent<SpriteRenderer>().bounds.Intersects(pathRoom.GetComponent<SpriteRenderer>().bounds) && box.gameObject != pathRoom)
+                            // If this room overlaps with an existing one, destroy it
+                            if (box.gameObject.GetComponent<SpriteRenderer>().bounds.Intersects(sprite.bounds) && box.gameObject != pathRoom)
                             {
-                                Debug.Log(box.gameObject.transform.name + " " + pathRoom.transform.name, box);
+                                //Debug.Log(box.gameObject.transform.name + " " + pathRoom.transform.name, box);
                                 ok = false;
                                 break;
                             }
@@ -232,7 +248,7 @@ public class MapGeneration : MonoBehaviour
                                 foreach (char character in toRemove)
                                     roomTypes.Remove(character);
                             }
-                            foreach (GameObject startPoint in pathRoom.GetComponent<room>().startPoints)
+                            foreach (GameObject startPoint in roomComp.startPoints)
                             {
                                 startPoint.transform.localEulerAngles = startPoint.transform.localEulerAngles + startPoints[i].transform.localEulerAngles;
                                 startPoints.Add(startPoint);
@@ -277,12 +293,13 @@ public class MapGeneration : MonoBehaviour
                 }
                 catch (Exception ex)
                 {
-                    Debug.Log(ex.ToString());
+                    Debug.LogError(ex.ToString());
                     break;
                 }
-
-
             }
+
+            MapAttempt.Update("Generating boss room...");
+
             List<GameObject> nonEndedStartPoints = new List<GameObject>();
             foreach (GameObject startPoint in startPoints)
             {
@@ -294,18 +311,23 @@ public class MapGeneration : MonoBehaviour
             int attempts = 0;
             while (nonEndedStartPoints.Count != 0 && spawnedBossRoom == false)
             {
+                yield return null;
+
                 attempts++;
                 int index = UnityEngine.Random.Range(1, 999999) % nonEndedStartPoints.Count;
                 GameObject point = nonEndedStartPoints[index];
                 GameObject pathRoom = null;
                 pathRoom = Instantiate(bossRoom);
+
+                var roomComp = pathRoom.GetComponent<room>();
+
                 pathRoom.transform.SetParent(parentObj.transform);
                 pathRoom.transform.localScale = new Vector3(1, 1, 1);
                 pathRoom.transform.localEulerAngles = new Vector3(0, 0, point.transform.localEulerAngles.z);
-                Vector3 offset = Quaternion.Euler(0, 0, point.transform.localEulerAngles.z) * pathRoom.GetComponent<room>().endPoint.transform.localPosition;
-                pathRoom.GetComponent<room>().endPoint.transform.position = point.transform.position;
-                pathRoom.transform.position = pathRoom.GetComponent<room>().endPoint.transform.position - offset * 100;
-                pathRoom.GetComponent<room>().endPoint.transform.localPosition = offset;
+                Vector3 offset = Quaternion.Euler(0, 0, point.transform.localEulerAngles.z) * roomComp.endPoint.transform.localPosition;
+                roomComp.endPoint.transform.position = point.transform.position;
+                pathRoom.transform.position = roomComp.endPoint.transform.position - offset * 100;
+                roomComp.endPoint.transform.localPosition = offset;
                 pathRoom.SetActive(true);
                 List<thisisaroom> boxes = FindObjectsOfType<thisisaroom>().ToList();
                 boxes.Remove(pathRoom.GetComponent<thisisaroom>());
@@ -313,13 +335,14 @@ public class MapGeneration : MonoBehaviour
                 bool ok = true;
                 GameObject parent = point.transform.parent.gameObject;
 
+                var sprite = pathRoom.GetComponent<SpriteRenderer>();
+
                 foreach (thisisaroom box in boxes)
                 {
-
-
-                    if(box.gameObject.GetComponent<SpriteRenderer>().bounds.Intersects(pathRoom.GetComponent<SpriteRenderer>().bounds) && box.gameObject != pathRoom)
-                            {
-                        Debug.Log(box.gameObject.transform.name + " " + pathRoom.transform.name, box);
+                    // If this room overlaps with an existing one, destroy it
+                    if(box.gameObject.GetComponent<SpriteRenderer>().bounds.Intersects(sprite.bounds) && box.gameObject != pathRoom)
+                    {
+                        //Debug.Log(box.gameObject.transform.name + " " + pathRoom.transform.name, box);
                         ok = false;
                         break;
                     }
@@ -338,20 +361,28 @@ public class MapGeneration : MonoBehaviour
                 }
             }
             attempts = 0;
+
+            MapAttempt.Update("Generating reward room...");
+
             while (nonEndedStartPoints.Count != 0 && spawnedRewardRoom == false)
             {
+                yield return null;
+
                 attempts++;
                 int index = UnityEngine.Random.Range(1, 999999) % nonEndedStartPoints.Count;
                 GameObject point = nonEndedStartPoints[index];
                 GameObject pathRoom = null;
                 pathRoom = Instantiate(rewardRoom);
+
+                var roomComp = pathRoom.GetComponent<room>();
+
                 pathRoom.transform.SetParent(parentObj.transform);
                 pathRoom.transform.localScale = new Vector3(1, 1, 1);
                 pathRoom.transform.localEulerAngles = new Vector3(0, 0, point.transform.localEulerAngles.z);
-                Vector3 offset = Quaternion.Euler(0, 0, point.transform.localEulerAngles.z) * pathRoom.GetComponent<room>().endPoint.transform.localPosition;
-                pathRoom.GetComponent<room>().endPoint.transform.position = point.transform.position;
-                pathRoom.transform.position = pathRoom.GetComponent<room>().endPoint.transform.position - offset * 100;
-                pathRoom.GetComponent<room>().endPoint.transform.localPosition = offset;
+                Vector3 offset = Quaternion.Euler(0, 0, point.transform.localEulerAngles.z) * roomComp.endPoint.transform.localPosition;
+                roomComp.endPoint.transform.position = point.transform.position;
+                pathRoom.transform.position = roomComp.endPoint.transform.position - offset * 100;
+                roomComp.endPoint.transform.localPosition = offset;
                 pathRoom.SetActive(true);
                 List<thisisaroom> boxes = FindObjectsOfType<thisisaroom>().ToList();
                 boxes.Remove(pathRoom.GetComponent<thisisaroom>());
@@ -359,13 +390,14 @@ public class MapGeneration : MonoBehaviour
                 bool ok = true;
                 GameObject parent = point.transform.parent.gameObject;
 
+                var sprite = pathRoom.GetComponent<SpriteRenderer>();
+
                 foreach (thisisaroom box in boxes)
                 {
 
-
-                    if (box.gameObject.GetComponent<SpriteRenderer>().bounds.Intersects(pathRoom.GetComponent<SpriteRenderer>().bounds) && box.gameObject != pathRoom)
+                    if (box.gameObject.GetComponent<SpriteRenderer>().bounds.Intersects(sprite.bounds) && box.gameObject != pathRoom)
                     {
-                        Debug.Log(box.gameObject.transform.name + " " + pathRoom.transform.name, box);
+                        //Debug.Log(box.gameObject.transform.name + " " + pathRoom.transform.name, box);
                         ok = false;
                         break;
                     }
@@ -387,21 +419,28 @@ public class MapGeneration : MonoBehaviour
             GameObject door7 = null;
             GameObject chestRoom = null;
 
+            MapAttempt.Update("Generating chest room...");
+
             attempts = 0;
             while (nonEndedStartPoints.Count != 0 && spawnedChestRoom == false)
             {
+                yield return null;
+
                 attempts++;
                 int index = UnityEngine.Random.Range(1, 999999) % nonEndedStartPoints.Count;
                 GameObject point = nonEndedStartPoints[index];
                 GameObject pathRoom = null;
                 pathRoom = Instantiate(this.chestRoom);
+
+                var roomComp = pathRoom.GetComponent<room>();
+
                 pathRoom.transform.SetParent(parentObj.transform);
                 pathRoom.transform.localScale = new Vector3(1, 1, 1);
                 pathRoom.transform.localEulerAngles = new Vector3(0, 0, point.transform.localEulerAngles.z);
-                Vector3 offset = Quaternion.Euler(0, 0, point.transform.localEulerAngles.z) * pathRoom.GetComponent<room>().endPoint.transform.localPosition;
-                pathRoom.GetComponent<room>().endPoint.transform.position = point.transform.position;
-                pathRoom.transform.position = pathRoom.GetComponent<room>().endPoint.transform.position - offset * 100;
-                pathRoom.GetComponent<room>().endPoint.transform.localPosition = offset;
+                Vector3 offset = Quaternion.Euler(0, 0, point.transform.localEulerAngles.z) * roomComp.endPoint.transform.localPosition;
+                roomComp.endPoint.transform.position = point.transform.position;
+                pathRoom.transform.position = roomComp.endPoint.transform.position - offset * 100;
+                roomComp.endPoint.transform.localPosition = offset;
                 pathRoom.SetActive(true);
                 List<thisisaroom> boxes = FindObjectsOfType<thisisaroom>().ToList();
                 boxes.Remove(pathRoom.GetComponent<thisisaroom>());
@@ -409,13 +448,14 @@ public class MapGeneration : MonoBehaviour
                 bool ok = true;
                 GameObject parent = point.transform.parent.gameObject;
 
+                var sprite = pathRoom.GetComponent<SpriteRenderer>();
+
                 foreach (thisisaroom box in boxes)
                 {
-
-
-                    if(box.gameObject.GetComponent<SpriteRenderer>().bounds.Intersects(pathRoom.GetComponent<SpriteRenderer>().bounds) && box.gameObject != pathRoom)
+                    // If this room overlaps with an existing one, destroy it
+                    if(box.gameObject.GetComponent<SpriteRenderer>().bounds.Intersects(sprite.bounds) && box.gameObject != pathRoom)
                             {
-                        Debug.Log(box.gameObject.transform.name + " " + pathRoom.transform.name, box);
+                        //Debug.Log(box.gameObject.transform.name + " " + pathRoom.transform.name, box);
                         ok = false;
                         break;
                     }
@@ -440,21 +480,28 @@ public class MapGeneration : MonoBehaviour
                 }
             }
 
+            MapAttempt.Update("Generating key room...");
+
             attempts = 0;
             while (nonEndedStartPoints.Count != 0 && spawnedKeyRoom == false)
             {
+                yield return null;
+
                 attempts++;
                 int index = UnityEngine.Random.Range(1, 999999) % nonEndedStartPoints.Count;
                 GameObject point = nonEndedStartPoints[index];
                 GameObject pathRoom = null;
                 pathRoom = Instantiate(keyRoom);
+
+                var roomComp = pathRoom.GetComponent<room>();
+
                 pathRoom.transform.SetParent(parentObj.transform);
                 pathRoom.transform.localScale = new Vector3(1, 1, 1);
                 pathRoom.transform.localEulerAngles = new Vector3(0, 0, point.transform.localEulerAngles.z);
-                Vector3 offset = Quaternion.Euler(0, 0, point.transform.localEulerAngles.z) * pathRoom.GetComponent<room>().endPoint.transform.localPosition;
-                pathRoom.GetComponent<room>().endPoint.transform.position = point.transform.position;
-                pathRoom.transform.position = pathRoom.GetComponent<room>().endPoint.transform.position - offset * 100;
-                pathRoom.GetComponent<room>().endPoint.transform.localPosition = offset;
+                Vector3 offset = Quaternion.Euler(0, 0, point.transform.localEulerAngles.z) * roomComp.endPoint.transform.localPosition;
+                roomComp.endPoint.transform.position = point.transform.position;
+                pathRoom.transform.position = roomComp.endPoint.transform.position - offset * 100;
+                roomComp.endPoint.transform.localPosition = offset;
                 pathRoom.SetActive(true);
                 List<thisisaroom> boxes = FindObjectsOfType<thisisaroom>().ToList();
                 boxes.Remove(pathRoom.GetComponent<thisisaroom>());
@@ -462,13 +509,14 @@ public class MapGeneration : MonoBehaviour
                 bool ok = true;
                 GameObject parent = point.transform.parent.gameObject;
 
+                var sprite = pathRoom.GetComponent<SpriteRenderer>();
+
                 foreach (thisisaroom box in boxes)
                 {
-
-
-                    if (box.gameObject.GetComponent<SpriteRenderer>().bounds.Intersects(pathRoom.GetComponent<SpriteRenderer>().bounds) && box.gameObject != pathRoom)
+                    // If this room overlaps with an existing one, destroy it
+                    if (box.gameObject.GetComponent<SpriteRenderer>().bounds.Intersects(sprite.bounds) && box.gameObject != pathRoom)
                     {
-                        Debug.Log(box.gameObject.transform.name + " " + pathRoom.transform.name, box);
+                        //Debug.Log(box.gameObject.transform.name + " " + pathRoom.transform.name, box);
                         ok = false;
                         break;
                     }
@@ -482,22 +530,29 @@ public class MapGeneration : MonoBehaviour
                 }
                 else
                 {
-                    pathRoom.GetComponent<LockRoom>().chestRoom = chestRoom;
-                    pathRoom.GetComponent<LockRoom>().chestRoomDoor = door7;
+                    var lockRoom = pathRoom.GetComponent<LockRoom>();
+
+                    lockRoom.chestRoom = chestRoom;
+                    lockRoom.chestRoomDoor = door7;
                     point.name = point.name.Split(' ')[0] + " True";
                     spawnedKeyRoom = true;
                 }
             }
 
+            MapAttempt.Update("Generating special rooms...");
+
             foreach (GameObject startPoint in startPoints)
             {
                 if (startPoint.name.Contains("True") == false && startPoint.name.Contains("Unused") == false)
                 {
-                    Debug.Log(startPoint.name, startPoint);
+                    yield return null;
+                    //Debug.Log(startPoint.name, startPoint);
 
                     startPoint.name = startPoint.name.Split(' ')[0];
                     GameObject pathRoom = null;
                     int type = UnityEngine.Random.Range(0, 999999) % endRooms.Length;
+
+                    // Those 2 'chest' rooms will be replaced by the wizard/stat shops
                     if(chestRooms.Count < 3)
                     {
                         for (int i = 0; i < endRooms.Length; i++)
@@ -508,13 +563,16 @@ public class MapGeneration : MonoBehaviour
                             }
                     }
                     pathRoom = Instantiate(endRooms[type]);
+
+                    var roomComp = pathRoom.GetComponent<room>();
+
                     pathRoom.transform.SetParent(parentObj.transform);
                     pathRoom.transform.localScale = new Vector3(1, 1, 1);
                     pathRoom.transform.localEulerAngles = new Vector3(0, 0, startPoint.transform.localEulerAngles.z);
-                    Vector3 offset = Quaternion.Euler(0, 0, startPoint.transform.localEulerAngles.z) * pathRoom.GetComponent<room>().endPoint.transform.localPosition;
-                    pathRoom.GetComponent<room>().endPoint.transform.position = startPoint.transform.position;
-                    pathRoom.transform.position = pathRoom.GetComponent<room>().endPoint.transform.position - offset * 100;
-                    pathRoom.GetComponent<room>().endPoint.transform.localPosition = offset;
+                    Vector3 offset = Quaternion.Euler(0, 0, startPoint.transform.localEulerAngles.z) * roomComp.endPoint.transform.localPosition;
+                    roomComp.endPoint.transform.position = startPoint.transform.position;
+                    pathRoom.transform.position = roomComp.endPoint.transform.position - offset * 100;
+                    roomComp.endPoint.transform.localPosition = offset;
                     pathRoom.SetActive(true);
                     List<thisisaroom> boxes = FindObjectsOfType<thisisaroom>().ToList();
                     boxes.Remove(pathRoom.GetComponent<thisisaroom>());
@@ -522,13 +580,14 @@ public class MapGeneration : MonoBehaviour
                     bool ok = true;
                     GameObject parent = startPoint.transform.parent.gameObject;
 
+                    var sprite = pathRoom.GetComponent<SpriteRenderer>();
+
                     foreach (thisisaroom box in boxes)
                     {
-
-
-                        if (box.gameObject.GetComponent<SpriteRenderer>().bounds.Intersects(pathRoom.GetComponent<SpriteRenderer>().bounds) && box.gameObject != pathRoom)
+                        // If this room overlaps with an existing one, destroy it
+                        if (box.gameObject.GetComponent<SpriteRenderer>().bounds.Intersects(sprite.bounds) && box.gameObject != pathRoom)
                         {
-                            Debug.Log(box.gameObject.transform.name + " " + pathRoom.transform.name + " " + box.gameObject.transform.position, box.gameObject);
+                            //Debug.Log(box.gameObject.transform.name + " " + pathRoom.transform.name + " " + box.gameObject.transform.position, box.gameObject);
                             ok = false;
                             break;
                         }
@@ -549,19 +608,27 @@ public class MapGeneration : MonoBehaviour
                     startPoint.name += " " + ok;
                 }
             }
+
+            MapAttempt.Update("Generating dead ends...");
+
             foreach (GameObject startPoint in startPoints)
             {
                 if (startPoint.name.Contains("True") == false || startPoint.name.Contains("Unused"))
                 {
+                    yield return null;
+
                     GameObject pathRoom = null;
                     pathRoom = Instantiate(deadEnd);
+
+                    var roomComp = pathRoom.GetComponent<room>();
+
                     pathRoom.transform.SetParent(parentObj.transform);
                     pathRoom.transform.localScale = new Vector3(1, 1, 1);
                     pathRoom.transform.localEulerAngles = new Vector3(0, 0, startPoint.transform.localEulerAngles.z);
-                    Vector3 offset = Quaternion.Euler(0, 0, startPoint.transform.localEulerAngles.z) * pathRoom.GetComponent<room>().endPoint.transform.localPosition;
-                    pathRoom.GetComponent<room>().endPoint.transform.position = startPoint.transform.position;
-                    pathRoom.transform.position = pathRoom.GetComponent<room>().endPoint.transform.position - offset * 100;
-                    pathRoom.GetComponent<room>().endPoint.transform.localPosition = offset;
+                    Vector3 offset = Quaternion.Euler(0, 0, startPoint.transform.localEulerAngles.z) * roomComp.endPoint.transform.localPosition;
+                    roomComp.endPoint.transform.position = startPoint.transform.position;
+                    pathRoom.transform.position = roomComp.endPoint.transform.position - offset * 100;
+                    roomComp.endPoint.transform.localPosition = offset;
                     pathRoom.SetActive(true);
                 }
             }
@@ -569,14 +636,19 @@ public class MapGeneration : MonoBehaviour
             if ((startPoints.Count < minRooms || spawnedBossRoom == false || spawnedRewardRoom == false || chestRooms.Count < 3 || voidRooms != 1 || spawnedChestRoom == false || spawnedKeyRoom == false))
             //if ((startPoints.Count < minRooms || voidRooms != 1))
             {
+                MapAttempt.Update("Recalculating...");
+
                 FindObjectOfType<DungeonData>().restarted = true;
                 OMEGA.Events.OnDungeonGenerationRestarted();
 
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                return;
+                yield break;
             }
             else
             {
+                MapAttempt.Update("Generating shop rooms...");
+                yield return null;
+
                 if (SceneManager.GetActiveScene().name != "Shops")
                     ServerNotification.instance.SendMessageToServer("User got into the " + SceneManager.GetActiveScene().name + " Dungeon.");
 
@@ -606,6 +678,10 @@ public class MapGeneration : MonoBehaviour
 
                 wizard.SetActive(true);
             }
+
+            MapAttempt.Update("Breaking torches...");
+            yield return null;
+
             parentObj.transform.localScale = new Vector3(1.5f, 1.5f, 1);
             foreach (GameObject obj in FindObjectsOfType<GameObject>())
             {
@@ -624,11 +700,14 @@ public class MapGeneration : MonoBehaviour
                             obj.transform.position += (Vector3)(-obj.transform.up * new Vector2(0, 0.05f));
                             obj.transform.localEulerAngles = new Vector3(0, 0, obj.transform.localEulerAngles.z - 10);
                             obj.GetComponentInChildren<SpriteRenderer>().transform.localScale /= 2;
-
                         }
                     }
                 }
             }
+
+            MapAttempt.Update("Generating megamap...");
+            yield return null;
+
             float minY = 0f;
             float maxY = 0f;
             float minX = 0f;
@@ -648,11 +727,16 @@ public class MapGeneration : MonoBehaviour
             float XDist = (maxX - minX) / 16f;
             float YDist = (maxY - minY) / 9f;
 
-            if (XDist > YDist)
-                FindObjectOfType<Megamap>().GetComponent<Camera>().orthographicSize = XDist * 16;
-            else FindObjectOfType<Megamap>().GetComponent<Camera>().orthographicSize = YDist * 9;
+            var megamap = FindObjectOfType<Megamap>();
 
-            FindObjectOfType<Megamap>().gameObject.SetActive(false);
+            if (XDist > YDist)
+                megamap.GetComponent<Camera>().orthographicSize = XDist * 16;
+            else megamap.GetComponent<Camera>().orthographicSize = YDist * 9;
+
+            megamap.gameObject.SetActive(false);
+
+            MapAttempt.Update("Tying up loose ends...");
+            yield return null;
 
             GameObject electricity = null;
 
@@ -667,12 +751,16 @@ public class MapGeneration : MonoBehaviour
 
             foreach (GameObject obj in Resources.FindObjectsOfTypeAll(typeof(GameObject)))
             {
-                if (obj.GetComponent<wizard>() != null)
+                var wizard = obj.GetComponent<wizard>();
+
+                if (wizard != null)
                 {
-                    obj.GetComponent<wizard>().electricityBox.electricalBolt = electricity;
+                    wizard.electricityBox.electricalBolt = electricity;
                 }
             }
         }
+
+        callback();
     }
     public GameObject voidRoom;
     public Sprite brokenTorch;

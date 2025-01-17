@@ -133,8 +133,7 @@ public class arrivePad : MonoBehaviour
         if (map != null)
         {
             map.SetActive(true);
-            map.GetComponentInChildren<MapGeneration>().Generate();
-            OnMapGenerated();
+            StartCoroutine(map.GetComponentInChildren<MapGeneration>().Generate(OnMapGenerated));
         }
         else
         {
