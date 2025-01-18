@@ -132,7 +132,17 @@ public class LockRoom : MonoBehaviour
     private void OnEnable()
     {
         if (parkourRoom && chestObj != null)
-            chestObj.SetActive(true);
+        {
+            if (!keyRoom)
+            {
+                OMEGA.Events.OnSpawnParkourChest(ref chestObj);
+            }
+
+            if (chestObj != null && !chestObj.activeSelf)
+            {
+                chestObj.SetActive(true);
+            }
+        }
         closeDoor.volume = PlayerPrefs.GetFloat("SFXVolume", 1);
         closeDoor.Play();
         collider = GetComponent<Collider2D>();

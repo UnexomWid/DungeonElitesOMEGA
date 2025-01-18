@@ -50,7 +50,7 @@ public class FinalBossHitbox : MonoBehaviour
     public void Damage()
     {
         damage++;
-        if(damage == 5)
+        if(damage == OMEGA.Data.GetOMEGAHitTolerance())
         {
             music.gameObject.SetActive(false);
 

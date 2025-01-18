@@ -22,6 +22,8 @@ namespace OMEGA
 
             p.SpawnPurchaseVfx();
 
+            Data.ColorPlayers();
+
             Destroy(gameObject);
         }
     }

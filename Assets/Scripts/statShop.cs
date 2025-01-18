@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using TMPro;
 
 public class statShop : MonoBehaviour
 {
     public GameObject parent;
-    player player;
+    public player player;
     public GameObject[] bars;
     public GameObject[] stars;
     public Sprite[] barTextures;
     public Sprite starSelect;
     public Sprite starDeselect;
     public int selectedStar = 0;
+    public TextMeshPro price;
     public GameObject pointsLeft;
     public GameObject pointsAvailable;
     public Sprite[] numbers;
@@ -45,6 +46,8 @@ public class statShop : MonoBehaviour
         pressedButton = true;
         player.ActivateReturn();
 
+        price.text = OMEGA.Data.GetStatShopCost(player).ToString();
+
         if (TutorialScene.instance != null)
         {
             if (TutorialScene.instance.interact.gameObject.activeInHierarchy)
@@ -75,7 +78,7 @@ public class statShop : MonoBehaviour
 
                     playerScript.followTarget = false;
                 }
-                if (playerData.hasFocus && ((player.gamePad != null ? (player.gamePad.leftStick.y < -0.5 && player.playerNumber != 5) : false) || (Input.GetKey(KeyCode.S) && player.playerNumber == 5 && player.keyboard) || (player.phoneController.dir.y < -0.5 && player.playerNumber == 5 && player.keyboard == false)) && canDo)
+                if (playerData.hasFocus && ((player.gamePad != null ? (player.gamePad.leftStick.y < -0.5 && player.playerNumber != 5) : false) || (Input.GetKey(KeyCode.S) && player.playerNumber == 5 && player.keyboard) || (player.phoneController != null && player.phoneController.dir.y < -0.5 && player.playerNumber == 5 && player.keyboard == false)) && canDo)
                 {
                     stars[selectedStar].GetComponent<SpriteRenderer>().sprite = starDeselect;
                     selectedStar++;
@@ -85,7 +88,7 @@ public class statShop : MonoBehaviour
                     canDo = false;
                     Invoke("CanDo", 0.25f);
                 }
-                else if (playerData.hasFocus && ((player.gamePad != null ? (player.gamePad.leftStick.y > 0.5 && player.playerNumber != 5) : false) || (Input.GetKey(KeyCode.W) && player.playerNumber == 5 && player.keyboard) || (player.phoneController.dir.y > 0.5 && player.playerNumber == 5 && player.keyboard == false)) && canDo)
+                else if (playerData.hasFocus && ((player.gamePad != null ? (player.gamePad.leftStick.y > 0.5 && player.playerNumber != 5) : false) || (Input.GetKey(KeyCode.W) && player.playerNumber == 5 && player.keyboard) || (player.phoneController != null && player.phoneController.dir.y > 0.5 && player.playerNumber == 5 && player.keyboard == false)) && canDo)
                 {
                     stars[selectedStar].GetComponent<SpriteRenderer>().sprite = starDeselect;
                     selectedStar--;
@@ -95,11 +98,14 @@ public class statShop : MonoBehaviour
                     canDo = false;
                     Invoke("CanDo", 0.25f);
                 }
+
                 if (playerData.hasFocus && ((player.gamePad != null ? (player.gamePad.A == 1 && player.playerNumber != 5) : false) || (Input.GetKey(KeyCode.E) && player.playerNumber == 5 && player.keyboard) || (player.isInteracting() && player.playerNumber == 5 && player.keyboard == false)))
                 {
                     if (pressedButton == false)
                     {
-                        if (selectedStar == 0 && FindObjectOfType<InventorySpawn>().coins >= 100)
+                        var cost = OMEGA.Data.GetStatShopCost(player);
+
+                        if (selectedStar == 0 && FindObjectOfType<InventorySpawn>().coins >= cost)
                         {
                             if (player.pointsAvailable > 0)
                             {
@@ -108,7 +114,9 @@ public class statShop : MonoBehaviour
                                 player.pointsLeft++;
                                 this.pointsLeft.GetComponent<SpriteRenderer>().sprite = numbers[player.pointsLeft];
                                 this.pointsAvailable.GetComponent<SpriteRenderer>().sprite = numbers[player.pointsAvailable];
-                                FindObjectOfType<InventorySpawn>().coins -= 100;
+                                FindObjectOfType<InventorySpawn>().coins -= cost;
+
+                                price.text = OMEGA.Data.GetStatShopCost(player).ToString();
 
                                 if (TutorialScene.instance != null)
                                 {
@@ -121,10 +129,11 @@ public class statShop : MonoBehaviour
                                 }
                             }
                         }
-                        else
-                            if (player.pointsLeft > 0)
+                        else if (player.pointsLeft > 0)
                         {
-                            if (selectedStar == 1 && player.hp < 10)
+                            var limit = OMEGA.Data.GetStatShopMax();
+
+                            if (selectedStar == 1 && player.hp < limit)
                             {
                                 player.SpawnPurchaseVfx();
                                 player.SetNewHp(true);
@@ -142,7 +151,7 @@ public class statShop : MonoBehaviour
                                     }
                                 }
                             }
-                            else if (selectedStar == 2 && player.reg < 10)
+                            else if (selectedStar == 2 && player.reg < limit)
                             {
                                 player.SpawnPurchaseVfx();
                                 player.SetNewReg(true);
@@ -160,7 +169,7 @@ public class statShop : MonoBehaviour
                                     }
                                 }
                             }
-                            else if (selectedStar == 3 && player.spd < 10)
+                            else if (selectedStar == 3 && player.spd < limit)
                             {
                                 player.SpawnPurchaseVfx();
                                 player.SetNewSPeed(true);
@@ -178,7 +187,7 @@ public class statShop : MonoBehaviour
                                     }
                                 }
                             }
-                            else if (selectedStar == 4 && player.dex < 10)
+                            else if (selectedStar == 4 && player.dex < limit)
                             {
                                 player.SpawnPurchaseVfx();
                                 player.SetNewDex(true);
@@ -196,7 +205,7 @@ public class statShop : MonoBehaviour
                                     }
                                 }
                             }
-                            else if (selectedStar == 5 && player.str < 10)
+                            else if (selectedStar == 5 && player.str < limit)
                             {
                                 player.SpawnPurchaseVfx();
                                 player.SetNewStr(true);
@@ -214,7 +223,7 @@ public class statShop : MonoBehaviour
                                     }
                                 }
                             }
-                            else if (selectedStar == 6 && player.cdr < 10)
+                            else if (selectedStar == 6 && player.cdr < limit)
                             {
                                 player.SpawnPurchaseVfx();
                                 player.SetNewCdr(true);

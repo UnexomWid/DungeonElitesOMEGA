@@ -19,6 +19,8 @@ public class InventorySpawn : MonoBehaviour
 
     public void AddCoins(int count)
     {
+        count = OMEGA.Data.GetCoinIncome(count);
+
         coins += count;
 
         DungeonData.instance.AddToQuest(13, count);

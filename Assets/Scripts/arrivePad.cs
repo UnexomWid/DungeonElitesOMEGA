@@ -38,7 +38,7 @@ public class arrivePad : MonoBehaviour
         if (dungeonData.restarted)
         {
             dungeonData.restarted = false;
-            GetComponent<Animator>().Play("prearrive", 0, 0.67f); // Skip the first 1s of the animation (fade in)
+            GetComponent<Animator>().Play("prearrive", 0, 0.985f); // Skip the first 1s of the animation (fade in)
             arrive = Resources.Load("Sounds\\arrive") as AudioClip;
         }
         else

@@ -20,6 +20,12 @@ public class player : MonoBehaviour
     public bool animState_IsRunning; //IsName("run");
 
     public float bonusStrPoints;
+
+    bool HumanPlayerAbleToMove()
+    {
+        return ableToMove && !OMEGA.DebugMaster.freecam;
+    }
+
     public void ResetPermPoints()
     {    
         float permHp = PlayerPrefs.GetFloat("Character" + caracterId + "hp", 0)/10;
@@ -28,6 +34,8 @@ public class player : MonoBehaviour
         float permDex = PlayerPrefs.GetFloat("Character" + caracterId + "dex", 0)/10;
         float permStr = PlayerPrefs.GetFloat("Character" + caracterId + "str", 0)/10;
         float permCdr = PlayerPrefs.GetFloat("Character" + caracterId + "cdr", 0)/10;
+
+        OMEGA.Events.OnResetPermPoints(ref permHp, ref permReg, ref permSpd, ref permDex, ref permStr, ref permCdr);
 
         health += baseHealth * 0.1f * permHp;
         maxHealth += baseHealth * 0.1f * permHp;
@@ -150,11 +158,22 @@ public class player : MonoBehaviour
         {
             currentItemMenu = menu;
         }
+
+        if (phoneInteraction == null)
+        {
+            return;
+        }
+
         phoneInteraction.Highlight();
     }
 
     public void UnhighlightInteraction(itemMenu menu = null)
     {
+        if (phoneInteraction == null)
+        {
+            return;
+        }
+
         if (menu != null)
         {
             if (menu == currentItemMenu)
@@ -167,22 +186,32 @@ public class player : MonoBehaviour
 
     public void ActivateReturn()
     {
+        if (phoneInteraction == null)
+        {
+            return;
+        }
+
         phoneReturn.gameObject.SetActive(true);
     }
 
     public void StopReturn()
     {
+        if (phoneReturn == null)
+        {
+            return;
+        }
+
         phoneReturn.gameObject.SetActive(false);
     }
 
     public bool isInteracting()
     {
-        return phoneInteraction.isInteracting;
+        return phoneInteraction != null && phoneInteraction.isInteracting;
     }
 
     public bool isReturning()
     {
-        return phoneReturn.isInteracting;
+        return phoneReturn && phoneReturn.isInteracting;
     }
 
 
@@ -346,7 +375,7 @@ public class player : MonoBehaviour
 
     bool GetKeyboardButton(int button)
     {
-        if (playerNumber == 5 && silenceObjActive == false && ableToMove)
+        if (playerNumber == 5 && silenceObjActive == false && HumanPlayerAbleToMove())
         {
             if (button == buttons[4] && Input.GetKey(KeyCode.Q))
                 return true;
@@ -361,7 +390,7 @@ public class player : MonoBehaviour
 
     bool GetPhoneButton(int button)
     {
-        if (playerNumber == 5 && silenceObjActive == false && ableToMove)
+        if (playerNumber == 5 && silenceObjActive == false && HumanPlayerAbleToMove())
         {
             if (button == buttons[4] && abillity1.attack)
                 return true;
@@ -378,7 +407,7 @@ public class player : MonoBehaviour
 
     bool GetGamePadButton(int button)
     {
-        if (gamePad != null && playerNumber != 5 && silenceObjActive == false && ableToMove)
+        if (gamePad != null && playerNumber != 5 && silenceObjActive == false && HumanPlayerAbleToMove())
         {
             if (button == buttons[4] && gamePad.A == 1)
                 return true;
@@ -390,11 +419,11 @@ public class player : MonoBehaviour
                 return true;
             else return false;
         }
-        else if (playerNumber == 5 && ableToMove && keyboard == false)
+        else if (playerNumber == 5 && HumanPlayerAbleToMove() && keyboard == false)
         {
             return GetPhoneButton(button);
         }
-        else if (playerNumber == 5 && ableToMove)
+        else if (playerNumber == 5 && HumanPlayerAbleToMove())
         {
             return GetKeyboardButton(button);
         }
@@ -1378,7 +1407,7 @@ public class player : MonoBehaviour
 
         if (bot == false && inDungeon)
             isInvulnerable = (stateInfo.IsName(attacks[0]) && abilSlot1.lvl >= 6) || (stateInfo.IsName(attacks[1]) && abilSlot2.lvl >= 6) || (stateInfo.IsName(attacks[2]) && abilSlot3.lvl >= 6);
-        if (((noKnockback == false && isInvulnerable == false && finalBoss == false) || (finalBoss && currentAttack >= 4 && stunned == false) || (isBoss && bossCurrentAttack > 7 && stunned == false && finalBoss == false) || (isBoss & bossScene && stunned == false && finalBoss == false)) && health > 0)
+        if (((noKnockback == false && isInvulnerable == false && finalBoss == false) || (finalBoss && currentAttack >= 4 && stunned == false) || (isBoss && bossCurrentAttack > OMEGA.Data.GetBossMaxAttacks() && stunned == false && finalBoss == false) || (isBoss & bossScene && stunned == false && finalBoss == false)) && health > 0)
         {
             if (currentAttack >= 4)
             {
@@ -1386,7 +1415,7 @@ public class player : MonoBehaviour
                     KillMobs();
                 stunTime = 5;
             }
-            if (isBoss && bossCurrentAttack > 7)
+            if (isBoss && bossCurrentAttack > OMEGA.Data.GetBossMaxAttacks())
             {
                 stunTime = 5;
                 CancelInvoke("ResetBossAttacks");
@@ -1415,7 +1444,7 @@ public class player : MonoBehaviour
         {
             currentAttack = 0;
         }
-        if (isBoss && bossCurrentAttack > 7)
+        if (isBoss && bossCurrentAttack > OMEGA.Data.GetBossMaxAttacks())
         {
             bossCurrentAttack = 0;
         }
@@ -1829,7 +1858,7 @@ public class player : MonoBehaviour
 
         if (bot == false && inDungeon)
             isInvulnerable = (animState.IsName(attacks[0]) && abilSlot1.lvl >= 6) || (animState.IsName(attacks[1]) && abilSlot2.lvl >= 6) || (animState.IsName(attacks[2]) && abilSlot3.lvl >= 6);
-        if (((noKnockback == false && isInvulnerable == false && finalBoss == false) || (finalBoss && currentAttack >= 4) || (isBoss && bossCurrentAttack > 7 && finalBoss == false)) && health > 0)
+        if (((noKnockback == false && isInvulnerable == false && finalBoss == false) || (finalBoss && currentAttack >= 4) || (isBoss && bossCurrentAttack > OMEGA.Data.GetBossMaxAttacks() && finalBoss == false)) && health > 0)
         {
             bool activeIce = ice.activeInHierarchy;
             if (activeIce)
@@ -1838,7 +1867,7 @@ public class player : MonoBehaviour
             }
             else
             {
-                if ((finalBoss && currentAttack >= 4) || (isBoss && bossCurrentAttack > 7))
+                if ((finalBoss && currentAttack >= 4) || (isBoss && bossCurrentAttack > OMEGA.Data.GetBossMaxAttacks()))
                     Stun(1.5f);
                 else
                 {
@@ -2018,7 +2047,7 @@ public class player : MonoBehaviour
             maxHealth = health;
         if (health > 0)
         {
-            if ((finalBoss && currentAttack >= 4) || (isBoss && bossCurrentAttack > 7))
+            if ((finalBoss && currentAttack >= 4) || (isBoss && bossCurrentAttack > OMEGA.Data.GetBossMaxAttacks()))
             {
                 Stun(1.5f);
             }
@@ -2307,7 +2336,7 @@ public class player : MonoBehaviour
                     circleCollider.enabled = false;
                 }
             }
-            else if ((noKnockback == false && isInvulnerable == false && finalBoss == false) || (finalBoss && stunned) || (isBoss && bossCurrentAttack > 7 && finalBoss == false) || (isBoss && bossScene && stunObj.activeInHierarchy && finalBoss == false))
+            else if ((noKnockback == false && isInvulnerable == false && finalBoss == false) || (finalBoss && stunned) || (isBoss && bossCurrentAttack > OMEGA.Data.GetBossMaxAttacks() && finalBoss == false) || (isBoss && bossScene && stunObj.activeInHierarchy && finalBoss == false))
             {
 
 
@@ -2319,7 +2348,7 @@ public class player : MonoBehaviour
                     if (animState.IsName("hurt2"))
                         animator.Play("hurt");
                     else animator.Play("hurt2");
-                    if ((noKnockback == false && isInvulnerable == false) || (finalBoss && stunned) || (isBoss && bossCurrentAttack > 7) || (isBoss && bossScene && stunObj.activeInHierarchy))
+                    if ((noKnockback == false && isInvulnerable == false) || (finalBoss && stunned) || (isBoss && bossCurrentAttack > OMEGA.Data.GetBossMaxAttacks()) || (isBoss && bossScene && stunObj.activeInHierarchy))
                     {
                         /*Vector2 newestPos = (Vector2)playerTransform.position + direction;
 
@@ -3000,13 +3029,7 @@ public class player : MonoBehaviour
                     }
                 }
 
-                if (SceneName == "Boss")
-                    level = 5;
-                else if (SceneName == "TutorialScene")
-                    level = 1;
-                else if (botInShops == false)
-                    level = dungeonData.currentMap;
-                else level = 2;
+                level = OMEGA.Data.GetMobThreatLevel();
 
                 float minAttack = 0;
                 float maxAttack = 0;
@@ -3729,6 +3752,8 @@ public class player : MonoBehaviour
                     if (sprite.sprite.name != "block")
                         sprite.color = new Color32((byte)(sprite.color.r * 255), (byte)(sprite.color.g * 255), (byte)(sprite.color.b * 255), 0);
                 }
+
+                OMEGA.Events.OnSpawnMob(this);
             }
             else if (finalBoss)
             {
@@ -5563,7 +5588,7 @@ public class player : MonoBehaviour
                 if (bot == false && locked == false && ((playerNumber == 5 && keyboard) || playerNumber != 5))
                 {
                     bool sentToCamera = false;
-                    if (bot == false)
+                    if (!OMEGA.DebugMaster.freecam)
                     {
                         Vector2 pos = playerTransform.position;
 
@@ -6169,9 +6194,9 @@ public class player : MonoBehaviour
                     }
                 }
 
-                if (spamDirection && bot == false && ableToMove)
+                if (spamDirection && bot == false && HumanPlayerAbleToMove())
                     DetectDirection();
-                if (controlling && bot == false && ableToMove)
+                if (controlling && bot == false && HumanPlayerAbleToMove())
                 {
                     if (online == false && keyboard)
                     {
@@ -6847,7 +6872,7 @@ public class player : MonoBehaviour
                     else myObj.layer = 16;
                     bool yAxis = false;
                     bool xAxis = false;
-                    if (controlling && online == false && bot == false && ableToMove)
+                    if (controlling && online == false && bot == false && HumanPlayerAbleToMove())
                     {
                         float x = 0;
                         float y = 0;
@@ -7210,7 +7235,7 @@ public class player : MonoBehaviour
                                 rb.velocity = new Vector2(0, 0);
                         }*/
                     }
-                    if (controlling && (canAttack || (networkCanAttack && online)) && bot == false && ableToMove)
+                    if (controlling && (canAttack || (networkCanAttack && online)) && bot == false && HumanPlayerAbleToMove())
                     {
                         if (gamePad != null || playerNumber == 5)
                         {
@@ -7778,7 +7803,7 @@ public class player : MonoBehaviour
                     }
 
                     #region
-                    if (controlling && online && bot == false && ableToMove)
+                    if (controlling && online && bot == false && HumanPlayerAbleToMove())
                     {
 
                         float x = 0;
@@ -8222,7 +8247,7 @@ public class player : MonoBehaviour
                                     {
                                         //if (caracterId != 5 || isBoss)
                                         //{
-                                        if (tBA >= timeBetweenAttacks && ((isBoss && bossCurrentAttack > 7) == false))
+                                        if (tBA >= timeBetweenAttacks && ((isBoss && bossCurrentAttack > OMEGA.Data.GetBossMaxAttacks()) == false))
                                         {
                                             hideSpot = null;
                                             if (MobCanDashMelee() && isBoss == false)
@@ -9176,7 +9201,7 @@ public class player : MonoBehaviour
             prevAttack = attack;
 
             bossCurrentAttack++;
-            if (isBoss && bossCurrentAttack > 7)
+            if (isBoss && bossCurrentAttack > OMEGA.Data.GetBossMaxAttacks())
                 Invoke("ResetBossAttacks", 5f);
         }
     }

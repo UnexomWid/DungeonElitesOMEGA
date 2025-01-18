@@ -123,7 +123,7 @@ public class MapGeneration : MonoBehaviour
             List<GameObject> chestRooms = new List<GameObject>();
             for (int i = 0; i < maxRooms; i++)
             {
-                MapAttempt.Update("Generating room " + (i + 1));
+                MapAttempt.Update(string.Format("Generating room {0}...", (i + 1)));
                 yield return null;
 
                 try

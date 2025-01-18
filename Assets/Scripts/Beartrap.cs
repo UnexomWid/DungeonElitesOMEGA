@@ -29,7 +29,7 @@ public class Beartrap : MonoBehaviour
             }
             else
             {
-                player.DecreaseHp(200 * dungeonData.currentMap, Vector2.zero, null);
+                player.DecreaseHp(OMEGA.Data.GetBearTrapDamage(), Vector2.zero, null);
                 player.Stun(1f);
             }
 

@@ -38,7 +38,7 @@ public class CameraFollow : MonoBehaviour
 
     public void Begin()
     {
-        // When players are added to CameraFollow.players, register them in OMEGA too.
+        // UW: When players are added to CameraFollow.players, register them in OMEGA too.
         // Players are removed from CameraFollow when they die, but not from OMEGA.
         if (players != null)
         {
@@ -155,11 +155,11 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inDungeon || inShops)
+        if ((inDungeon || inShops) && !OMEGA.DebugMaster.freecam)
         {
             Vector3 pos = Vector3.zero;
             int minus = 0;
-            for(int i=0;i<players.Count;i++)
+            for (int i = 0; i < players.Count; i++)
             {
                 if (players[i] != null)
                     pos += players[i].transform.position;
@@ -177,6 +177,7 @@ public class CameraFollow : MonoBehaviour
                 }
             }
         }
+
         if (inDungeon)
         {
             if (showDamage)
