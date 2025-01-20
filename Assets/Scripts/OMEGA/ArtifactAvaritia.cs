@@ -4,11 +4,6 @@ namespace OMEGA
 {
     public class ArtifactAvaritia : MonoBehaviour
     {
-        void Awake()
-        {
-
-        }
-
         void OnTriggerEnter2D(Collider2D other)
         {
             player p = other.gameObject.GetComponent<player>();
@@ -18,6 +13,11 @@ namespace OMEGA
                 return;
             }
 
+            Claim(p);
+        }
+
+        public void Claim(player p)
+        {
             Events.OnClaimArtifact();
 
             p.SpawnPurchaseVfx();

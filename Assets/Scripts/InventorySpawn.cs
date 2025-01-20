@@ -282,11 +282,12 @@ public class InventorySpawn : MonoBehaviour
     public SelectableItem[] itemSlots;
     public Sprite[] itemSprites;
     public string[] itemDescs;
-    public bool AddItem(int type)
+    public bool AddItem(OMEGA.Items.ID id)
     {
+        int type = (int)id;
+
         bool ok = false;
-        if (type == -1)
-            return false;
+
         foreach (SelectableItem itemSlot in itemSlots)
         {
             if (itemSlot.containsItem == false)

@@ -56,11 +56,21 @@ namespace OMEGA
 
         public static int claimedArtifacts;
 
+        public static int boughtItems;
+
+        public static ItemShop itemShop;
+        public static GameObject artifact; // The artifact in the current dungeon
+        public static GameObject jewel;    // OMEGA's current jewel
+
         public static void Reset()
         {
             trialMode = TrialMode.VANILLA;
             players = new List<player>();
             claimedArtifacts = 0;
+            boughtItems = 0;
+            itemShop = null;
+            artifact = null;
+            jewel = null;
         }
 
         public static void UnlockMaxAvailableStatPoints()

@@ -48,6 +48,8 @@ namespace OMEGA
                 HandleInfo();
                 HandleFreecam();
                 HandleMidas();
+                HandleClaimArtifact();
+                HandleInstakill();
             }
             catch (System.Exception ex)
             {
@@ -113,7 +115,14 @@ namespace OMEGA
                     y -= 1f;
                 }
 
-                Vector2 vel = (new Vector2(x, y)).normalized * FREECAM_SPEED * Time.deltaTime;
+                float speed = FREECAM_SPEED;
+
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    speed *= 2;
+                }
+
+                Vector2 vel = (new Vector2(x, y)).normalized * speed * Time.deltaTime;
 
                 cam.position = new Vector3(cam.position.x + vel.x, cam.position.y + vel.y, cam.position.z);
 
@@ -137,7 +146,48 @@ namespace OMEGA
 
                 if (inventory)
                 {
-                    inventory.coins = 99999999;
+                    inventory.coins = 1000000;
+                }
+
+                if (Data.players.Count > 0)
+                {
+                    Data.players[0].health = 9999999f;
+
+                    var wiz = Data.players[0].wizard;
+
+                    if (wiz != null)
+                    {
+                        wiz.staffDamage = 9999999f;
+                    }
+                }
+            }
+        }
+
+        void HandleClaimArtifact()
+        {
+            if (Input.GetKeyDown(KeyCode.F6))
+            {
+                if (Data.artifact != null)
+                {
+                    Data.artifact.GetComponent<ArtifactAvaritia>().Claim(Data.players[0]);
+                }
+            }
+        }
+
+        void HandleInstakill()
+        {
+            if (Input.GetKeyDown(KeyCode.F7))
+            {
+                var players = FindObjectsOfType<player>();
+
+                foreach (var player in players)
+                {
+                    var p = player.GetComponent<player>();
+
+                    if (p != null && (p.bot || p.boss))
+                    {
+                        p.DecreaseHp(99999999f, Vector2.zero, Data.players[0]);
+                    }
                 }
             }
         }
@@ -156,7 +206,7 @@ namespace OMEGA
                 string reserved = (Profiler.GetTotalReservedMemoryLong() / (1024 * 1024)).ToString();
                 string allocated = (Profiler.GetTotalAllocatedMemoryLong() / (1024 * 1024)).ToString().PadLeft(reserved.Length, ' ');
 
-                string info = string.Format("x: {0}\ny: {1}\n---\nMem {2}/{3} MB\nF2 - Spy satellite\nF3 - Show this\nF4 - Freecam", tform.position.x, tform.position.y, allocated, reserved);
+                string info = string.Format("x: {0}\ny: {1}\n---\nMem {2}/{3} MB\nF2 - Spy satellite\nF3 - Show this\nF4 - Freecam\nF5 - Midas\nF6 - Claim artifact\nF7 - Instakill", tform.position.x, tform.position.y, allocated, reserved);
 
                 GUI.Label(new Rect(10f, 10f, (float)(Screen.width / 9), (float)(Screen.width / 9)), info, infoStyle);
             }

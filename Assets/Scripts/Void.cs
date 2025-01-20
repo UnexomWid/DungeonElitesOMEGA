@@ -169,7 +169,7 @@ public class Void : MonoBehaviour
                         if (itemType > 7)
                             itemType += 2;
 
-                        inventorySpawn.AddItem(itemType);
+                        inventorySpawn.AddItem((OMEGA.Items.ID)itemType);
                     }
 
                     if (spawnBoss)
@@ -267,7 +267,7 @@ public class Void : MonoBehaviour
 
                         clone.GetComponentInChildren<SpriteRenderer>().gameObject.transform.localScale *= 100;
 
-                        inventorySpawn.AddItem(itemType);
+                        inventorySpawn.AddItem((OMEGA.Items.ID)itemType);
                     }
 
                     if (spawnBoss)

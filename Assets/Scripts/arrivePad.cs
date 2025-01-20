@@ -65,7 +65,6 @@ public class arrivePad : MonoBehaviour
         {
 
         }
-
     }
 
     public void EndAnim()
@@ -133,7 +132,17 @@ public class arrivePad : MonoBehaviour
         if (map != null)
         {
             map.SetActive(true);
-            StartCoroutine(map.GetComponentInChildren<MapGeneration>().Generate(OnMapGenerated));
+
+            var generator = map.GetComponentInChildren<MapGeneration>();
+
+            if (generator != null)
+            {
+                StartCoroutine(map.GetComponentInChildren<MapGeneration>().Generate(OnMapGenerated));
+            }
+            else
+            {
+                OnMapGenerated();
+            }
         }
         else
         {
@@ -163,7 +172,7 @@ public class arrivePad : MonoBehaviour
             {
                 if (dungeonData.items[i] != -1)
                 {
-                    inventorySpawn.AddItem(dungeonData.items[i]);
+                    inventorySpawn.AddItem((OMEGA.Items.ID)dungeonData.items[i]);
                 }
             }
 

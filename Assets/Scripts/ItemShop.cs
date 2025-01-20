@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemShop : MonoBehaviour
 {
     public int maxNum;
-    List<int> numbers;
+    public List<int> numbers;
     public GameObject[] itemMenus;
     void Start()
     {
@@ -19,7 +19,7 @@ public class ItemShop : MonoBehaviour
             }
             while (numbers.Contains(num));
             numbers.Add(num);
-            menu.GetComponent<itemMenu>().SetUp(num);
+            menu.GetComponent<itemMenu>().SetUp((OMEGA.Items.ID)num);
         }
     }
 }

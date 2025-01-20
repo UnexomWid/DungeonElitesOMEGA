@@ -129,7 +129,7 @@ public class LockRoom : MonoBehaviour
 
     bool enabledUpdate = false;
 
-    private void OnEnable()
+    void Awake()
     {
         if (parkourRoom && chestObj != null)
         {
@@ -137,7 +137,13 @@ public class LockRoom : MonoBehaviour
             {
                 OMEGA.Events.OnSpawnParkourChest(ref chestObj);
             }
+        }
+    }
 
+    private void OnEnable()
+    {
+        if (parkourRoom && chestObj != null)
+        {
             if (chestObj != null && !chestObj.activeSelf)
             {
                 chestObj.SetActive(true);

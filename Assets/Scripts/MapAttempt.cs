@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MapAttempt : MonoBehaviour
 {
@@ -9,12 +10,18 @@ public class MapAttempt : MonoBehaviour
     {
         text = GetComponent<TextMeshProUGUI>();
 
-        if (DungeonData.instance.attempt++ > 1)
+        if (SceneManager.GetActiveScene().name == "Boss")
+        {
+            MapAttempt.Update("I am OMEGA.");
+        }
+        else if (DungeonData.instance.attempt++ > 1)
         {
             text.text = "Recalculating...";
         }
-
-        text.text = "Generating dungeon...";
+        else
+        {
+            text.text = "Generating dungeon...";
+        }
     }
 
     public static void Update(string what)

@@ -7255,7 +7255,7 @@ public class player : MonoBehaviour
                                                     bool ok = true;
                                                     foreach (itemMenu menu in itemMenus)
                                                     {
-                                                        if (menu.players.Contains(myPlayer))
+                                                        if (menu != null && menu.players != null && menu.players.Contains(myPlayer))
                                                         {
                                                             ok = false; break;
                                                         }

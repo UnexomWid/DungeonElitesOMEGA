@@ -39,7 +39,7 @@ public class FinalBossHitbox : MonoBehaviour
 
     public ThirdPhase thirdPhase;
 
-    int damage = 0;
+    public int damage = 0;
 
     Animator animator;
     private void Start()
@@ -50,6 +50,9 @@ public class FinalBossHitbox : MonoBehaviour
     public void Damage()
     {
         damage++;
+
+        OMEGA.Events.OnHitOMEGA(this);
+
         if(damage == OMEGA.Data.GetOMEGAHitTolerance())
         {
             music.gameObject.SetActive(false);

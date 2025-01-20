@@ -32,6 +32,15 @@ namespace OMEGA
         public static void OnClaimArtifact()
         {
             Data.claimedArtifacts++;
+            Data.artifact = null;
+
+            if (Data.trialMode == Data.TrialMode.AVARITIA)
+            {
+                foreach (var menu in Data.itemShop.itemMenus)
+                {
+                    menu.GetComponent<itemMenu>().UpdatePrice();
+                }
+            }
         }
 
         public static void OnResetPermPoints(ref float hp, ref float reg, ref float spd, ref float dex, ref float str, ref float cdr)
@@ -57,11 +66,14 @@ namespace OMEGA
                 var tform = artifact.GetComponent<Transform>();
                 var chestTform = chest.GetComponent<Transform>();
 
+                tform.parent = chestTform.parent;
                 tform.position = new Vector3(chestTform.position.x, chestTform.position.y, -5f);
 
                 GameObject.Destroy(chest);
 
                 chest = artifact;
+
+                Data.artifact = artifact;
             }
         }
 
@@ -157,6 +169,63 @@ namespace OMEGA
             }
         }
 
+        public static void OnBuyItem(itemMenu menu)
+        {
+            // TODO: cursed items
+            Data.boughtItems++;
+
+            if (Data.trialMode == Data.TrialMode.AVARITIA)
+            {
+                // Restock
+                int index = -1;
+
+                for (int i = 0; i < Data.itemShop.itemMenus.Length; ++i)
+                {
+                    if (menu.gameObject == Data.itemShop.itemMenus[i])
+                    {
+                        Data.itemShop.numbers[i] = -1;
+
+                        int num;
+                        do
+                        {
+                            num = UnityEngine.Random.Range(1, 999999) % (Data.itemShop.maxNum + 1);
+                        }
+                        while (Data.itemShop.numbers.Contains(num));
+
+                        Data.itemShop.numbers[i] = num;
+
+                        menu.SetUp((Items.ID)num);
+
+                        index = i;
+
+                        break;
+                    }
+                }
+
+                if (index != -1)
+                {
+                    // Update price for the other items since 'boughtItems' changed
+                    for (int i = 0; i < Data.itemShop.itemMenus.Length; ++i)
+                    {
+                        if (i == index)
+                        {
+                            continue;
+                        }
+
+                        Data.itemShop.itemMenus[i].GetComponent<itemMenu>().UpdatePrice();
+                    }
+                }
+            }
+        }
+
+        public static void OnHitOMEGA(FinalBossHitbox boss)
+        {
+            if (Data.trialMode == Data.TrialMode.AVARITIA && boss.damage == Data.claimedArtifacts && boss.damage < Data.GetOMEGAHitTolerance() && Data.jewel != null)
+            {
+                Data.jewel.GetComponent<Animator>().SetTrigger("Trigger");
+            }
+        }
+
         public static void OnDungeonGenerationRestarted()
         {
             
@@ -164,7 +233,7 @@ namespace OMEGA
 
         public static void OnDungeonGenerated()
         {
-
+            Data.itemShop = GameObject.FindObjectOfType<ItemShop>();
         }
     }
 }

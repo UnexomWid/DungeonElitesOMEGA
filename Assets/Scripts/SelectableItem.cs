@@ -244,7 +244,7 @@ public class SelectableItem : MonoBehaviour
                                         int rand = Random.Range(1, 999999)%11;
                                         if (rand > 7)
                                             rand += 2;
-                                        FindObjectOfType<InventorySpawn>().AddItem(rand);
+                                        FindObjectOfType<InventorySpawn>().AddItem((OMEGA.Items.ID)rand);
 
                                         DungeonData.instance.AddToQuest(29, 1);
                                     }
